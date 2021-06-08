@@ -22,28 +22,19 @@ public class Storage <ProductType> implements Observable {
         blockingQueue = new LinkedBlockingQueue<>(capacity);
     }
 
-    public synchronized void storeProduct(ProductType product) {
+    public synchronized void storeProduct(ProductType product) throws InterruptedException {
         while (isFull()) {
-            try {
-                this.wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace(); // TODO обработать прерывание потоков
-            }
+            this.wait();
         }
         blockingQueue.add(product);
         this.notifyAll();
         notifyObservers();
     }
 
-    public synchronized ProductType getProduct() {
+    public synchronized ProductType getProduct() throws InterruptedException {
         while (isEmpty()) {
-            try {
-                notifyObservers();
-                this.wait();
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-                // TODO обработать прерывание потоков
-            }
+            notifyObservers();
+            this.wait();
         }
         this.notifyAll();
         notifyObservers();

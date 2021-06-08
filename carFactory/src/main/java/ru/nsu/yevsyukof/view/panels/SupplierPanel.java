@@ -48,7 +48,7 @@ public class SupplierPanel extends JPanel implements Observer {
 
         supplierDelaySlider.setPaintLabels(true); // отрисовка делений
         supplierDelaySlider.setMajorTickSpacing(1); // шаг значений ползунка
-        supplierDelaySlider.setValue(5); // TODO
+        supplierDelaySlider.setValue(5); // TODO оставить таким начальное значение?
     }
 
     public void setStorageFullness(int fullness, int capacity) {

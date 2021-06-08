@@ -23,16 +23,14 @@ abstract class SupplierThread<SuppliedProductType extends IdentifiableProduct> e
 
     @Override
     public void run() {
-        while (!Thread.currentThread().isInterrupted()) {
-            destinationStorage.storeProduct(createProduct());
+        try {
+            while (!Thread.currentThread().isInterrupted()) {
+                destinationStorage.storeProduct(createProduct());
 
-//            System.err.println(Thread.currentThread().getName() + " поставил продукт ");
-
-            try {
                 Thread.sleep(1000L * supplierDelay.getDelay());
-            } catch (InterruptedException e) { // TODO обрабатывать номрально прерывание
-                e.printStackTrace();
             }
+        } catch (InterruptedException e) {
+            System.err.println(Thread.currentThread().getName() + " was interrupted");
         }
     }
 }

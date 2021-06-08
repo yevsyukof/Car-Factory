@@ -28,17 +28,17 @@ public final class BuildCarTask implements Runnable {
 
     @Override
     public void run() {
-        Engine engine = engineStorage.getProduct();
-        Body body = bodyStorage.getProduct();
-        Accessory accessory = accessoryStorage.getProduct();
-
         try {
-            Thread.sleep(1000L * workerDelay.getDelay()); // TODO TODO TODO
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+            Engine engine = engineStorage.getProduct();
+            Body body = bodyStorage.getProduct();
+            Accessory accessory = accessoryStorage.getProduct();
 
-        Car newCar = new Car(IDIssuingService.getNewProductID(), engine, body, accessory);
-        carStorage.storeProduct(newCar);
+            Thread.sleep(1000L * workerDelay.getDelay());
+
+            Car newCar = new Car(IDIssuingService.getNewProductID(), engine, body, accessory);
+            carStorage.storeProduct(newCar);
+        } catch (InterruptedException e) {
+            System.err.println(Thread.currentThread().getName() + " was interrupted");
+        }
     }
 }

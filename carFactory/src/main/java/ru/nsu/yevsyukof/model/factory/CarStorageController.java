@@ -36,22 +36,22 @@ public class CarStorageController extends Thread {
 
     @Override
     public void run() {
-        while (!Thread.currentThread().isInterrupted()) {
-            synchronized (carStorage) {
-                while (workersPool.countTasksInQueue() >= carStorage.countAvailablePlaces()) {
-                    try {
+        try {
+            while (!Thread.currentThread().isInterrupted()) {
+                synchronized (carStorage) {
+                    while (workersPool.countTasksInQueue() >= carStorage.countAvailablePlaces()) {
                         carStorage.wait();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace(); // TODO добавить прерывание
+                    }
+
+                    for (int i = 0; i < carStorage.countAvailablePlaces() -
+                            workersPool.countTasksInQueue() + workersPool.getPoolSize(); ++i) {
+                        workersPool.execute(new BuildCarTask(engineStorage, bodyStorage, accessoryStorage,
+                                carStorage, workerDelay));
                     }
                 }
-
-                for (int i = 0; i < carStorage.countAvailablePlaces() -
-                        workersPool.countTasksInQueue() + workersPool.getPoolSize(); ++i) {
-                    workersPool.execute(new BuildCarTask(engineStorage, bodyStorage, accessoryStorage,
-                            carStorage, workerDelay));
-                }
             }
+        } catch (InterruptedException e) {
+            System.err.println(Thread.currentThread().getName() + " was interrupted");
         }
     }
 }

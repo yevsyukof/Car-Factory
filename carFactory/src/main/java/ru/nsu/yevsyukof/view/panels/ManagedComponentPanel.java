@@ -33,7 +33,7 @@ public class ManagedComponentPanel extends JPanel {
     private void configureComponents() {
         componentDelaySlider.setPaintLabels(true); // отрисовка делений
         componentDelaySlider.setMajorTickSpacing(1); // шаг значений ползунка
-        componentDelaySlider.setValue(5); // TODO
+        componentDelaySlider.setValue(5); // TODO оставить таким?
     }
 }
 
