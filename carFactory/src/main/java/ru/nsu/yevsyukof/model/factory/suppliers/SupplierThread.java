@@ -29,8 +29,6 @@ abstract class SupplierThread<SuppliedProductType extends IdentifiableProduct> e
 
                 Thread.sleep(1000L * supplierDelay.getDelay());
             }
-        } catch (InterruptedException e) {
-            System.err.println(Thread.currentThread().getName() + " was interrupted");
-        }
+        } catch (InterruptedException ignored) { }
     }
 }

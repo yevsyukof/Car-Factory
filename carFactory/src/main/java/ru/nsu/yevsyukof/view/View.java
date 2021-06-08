@@ -10,6 +10,8 @@ import ru.nsu.yevsyukof.view.panels.SupplierPanel;
 import javax.swing.*;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 // все манипуляции с отрисовкой будем производить через этот класс
 public class View implements Runnable {
@@ -77,8 +79,24 @@ public class View implements Runnable {
 
         mainWindow.add(mainPanel);
 
+        mainWindow.addWindowListener(new MyWindowAdapter(mainWindow));
+
 //        mainWindow.setResizable(false);
         mainWindow.setFocusable(true);
         mainWindow.setVisible(true);
+    }
+
+    private class MyWindowAdapter extends WindowAdapter {
+        private final JFrame window;
+
+        public MyWindowAdapter(JFrame window) {
+            this.window = window;
+        }
+
+        @Override
+        public void windowClosing(WindowEvent e) {
+            FactoryInfrastructure.getInstance().shutdown();
+            System.exit(0);
+        }
     }
 }

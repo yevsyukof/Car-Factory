@@ -16,8 +16,6 @@ public class DelayController implements ChangeListener {
 
     @Override
     public void stateChanged(ChangeEvent e) {
-//        System.err.println(((JSlider) e.getSource()).getValue()); // TODO
-
         managedDelay.setDelay(((JSlider) e.getSource()).getValue());
     }
 }

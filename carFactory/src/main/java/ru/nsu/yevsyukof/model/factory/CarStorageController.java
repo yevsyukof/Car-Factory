@@ -50,8 +50,6 @@ public class CarStorageController extends Thread {
                     }
                 }
             }
-        } catch (InterruptedException e) {
-            System.err.println(Thread.currentThread().getName() + " was interrupted");
-        }
+        } catch (InterruptedException ignored) { }
     }
 }
